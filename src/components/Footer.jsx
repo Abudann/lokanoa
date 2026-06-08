@@ -43,10 +43,15 @@ export default function Footer() {
                 <MapPin className="w-5 h-5 flex-shrink-0" />
                 <span>Pontianak, West Kalimantan</span>
               </div>
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <Phone className="w-5 h-5" />
-                <span>Contact via Instagram DM</span>
-              </div>
+              <a 
+                href="https://wa.me/6282148651719"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center md:justify-start gap-3 hover:text-light-accent dark:hover:text-dark-accent transition-colors"
+              >
+                <Phone className="w-5 h-5 flex-shrink-0" />
+                <span>0821-4865-1719</span>
+              </a>
             </div>
           </div>
 

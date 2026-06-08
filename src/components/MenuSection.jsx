@@ -44,10 +44,21 @@ function FadeInSection({ children, delay = 0 }) {
 
 export default function MenuSection() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [visibleCount, setVisibleCount] = useState(8);
+
+  useEffect(() => {
+    setVisibleCount(8);
+  }, [selectedCategory]);
 
   const filteredProducts = selectedCategory === 'All' 
     ? products 
     : products.filter(p => p.category === selectedCategory);
+
+  const displayedProducts = filteredProducts.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount(filteredProducts.length);
+  };
 
   return (
     <section id="menu" className="py-24 bg-light-bg dark:bg-dark-bg min-h-screen">
@@ -71,13 +82,26 @@ export default function MenuSection() {
             No products found in this category.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredProducts.map((product, index) => (
-              <FadeInSection key={product.id} delay={(index % 4) * 100}>
-                <MenuCard product={product} />
-              </FadeInSection>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {displayedProducts.map((product, index) => (
+                <FadeInSection key={product.id} delay={(index % 4) * 100}>
+                  <MenuCard product={product} />
+                </FadeInSection>
+              ))}
+            </div>
+            
+            {visibleCount < filteredProducts.length && (
+              <div className="mt-16 text-center">
+                <button
+                  onClick={handleLoadMore}
+                  className="px-8 py-3 border-2 border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent font-condensed font-bold tracking-widest uppercase hover:bg-light-accent hover:text-white dark:hover:bg-dark-accent dark:hover:text-dark-bg transition-colors duration-300"
+                >
+                  Load More
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
